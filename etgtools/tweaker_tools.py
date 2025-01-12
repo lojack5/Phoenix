@@ -155,7 +155,8 @@ class FixWxPrefix(object):
 
         Finally, the 'wx.' prefix is added if needed.
         """
-        for txt in ['const', '*', '&', ' ']:
+        name = re.sub(r'(const(?![\w\d]))', '', name) # remove 'const', but not 'const'raints
+        for txt in ['*', '&', ' ']:
             name = name.replace(txt, '')
         name = name.replace('::', '.')
         if not is_expression:
