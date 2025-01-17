@@ -43,7 +43,7 @@ magicMethods = {
 
 
 class AutoConversionInfo(NamedTuple):
-    convertables: tuple[str, ...] # String type-hints for each of the types that can be automatically converted to this class
+    convertables: Tuple[str, ...] # String type-hints for each of the types that can be automatically converted to this class
     code: str                     # Code that will be added to SIP for this conversion
 
 
@@ -255,10 +255,10 @@ class FixWxPrefix(object):
     """
 
     _coreTopLevelNames = None
-    _auto_conversions: dict[str, tuple[str, ...]] = {}
+    _auto_conversions: dict[str, Tuple[str, ...]] = {}
 
     @classmethod
-    def register_autoconversion(cls, class_name: str, convertables: tuple[str, ...]) -> None:
+    def register_autoconversion(cls, class_name: str, convertables: Tuple[str, ...]) -> None:
         cls._auto_conversions[class_name] = convertables
 
     def fixWxPrefix(self, name, checkIsCore=False):

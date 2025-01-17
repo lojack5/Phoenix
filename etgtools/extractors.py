@@ -533,8 +533,10 @@ class FunctionDef(BaseDef, FixWxPrefix):
         if getattr(self, 'isCtor', False):
             name = '__init__'
         else:
-            name = self.name or self.pyName
+            name = self.pyName or self.name
             name = self.fixWxPrefix(name)
+            if 'Destroy' in (name, self.name, self.pyName):
+                print(f'Generating signature for: {name}, {self.name}, {self.pyName}')
         # __bool__ and __nonzero__ need to be defined as returning int for SIP, but for Python
         # __bool__ is required to return a bool:
         if name in ('__bool__', '__nonzero__'):
@@ -722,7 +724,7 @@ class ClassDef(BaseDef):
     @convertFromPyObject.setter
     def convertFromPyObject(self, value: AutoConversionInfo) -> None:
         self._convertFromPyObject = value.code
-        name = self.name or self.pyName
+        name = self.pyName or self.name
         name = removeWxPrefix(name)
         FixWxPrefix.register_autoconversion(name, value.convertables)
 
